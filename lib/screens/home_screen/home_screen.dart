@@ -1,3 +1,4 @@
+import 'package:bingo_project/AppConstData/helper_function.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,14 +10,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(
+        title: 'Bkrkortsteori',
+        titleColor:        Colors.green,
+
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
-              _buildTitle("Bkrkortsteori"),
+
               const SizedBox(height: 10),
               _buildHighlightedContainer(
                 imagePath: "assets/images/theory.png",
@@ -72,16 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 34,
-        color: Colors.green,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
 
   Widget _buildHighlightedContainer({
     required String imagePath,

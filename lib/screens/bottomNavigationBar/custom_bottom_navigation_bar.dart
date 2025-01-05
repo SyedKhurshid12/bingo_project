@@ -1,5 +1,6 @@
 import 'package:bingo_project/AppConstData/app_colors.dart';
 import 'package:bingo_project/screens/home_screen/home_screen.dart';
+import 'package:bingo_project/screens/theory_page/theory_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,15 +25,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const Center(
       child: Text(
         'Driving Screen',
-        style: TextStyle(fontSize: 24, color: Colors.blue),
-      ),
-    ),
-    const Center(
-      child: Text(
-        'Theory Screen',
         style: TextStyle(fontSize: 24, color: Colors.orange),
       ),
     ),
+    const TheoryScreen(),
+
     const Center(
       child: Text(
         'Settings Screen',

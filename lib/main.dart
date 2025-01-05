@@ -1,40 +1,66 @@
+import 'package:bingo_project/AppConstData/setlanguage.dart';
+import 'package:bingo_project/AppConstData/string_file.dart';
 import 'package:bingo_project/screens/bottomNavigationBar/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'AppConstData/routes.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+
+
+  final localeLanuage = await SharedPreferences.getInstance();
+  runApp(MyApp(
+    prefs: localeLanuage,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences _localeLanuage;
 
-  // This widget is the root of your application.
+  const MyApp({Key? key, required SharedPreferences prefs})
+      : _localeLanuage = prefs,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => LocaleModel(_localeLanuage),
+      child: Consumer<LocaleModel>(
+        builder: (context, localeModel, child) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'bkörkortsteori',
+            getPages: getpage,
+            locale: localeModel.locale,
+            initialRoute: Routes.splashScreen,
+            translations: AppTranslations(),
+            theme: ThemeData(
+                useMaterial3: false,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                dividerColor: Colors.transparent,
+                fontFamily: "Roboto",
+                primaryColor: const Color(0xff1347FF),
+                colorScheme: ColorScheme.fromSwatch().copyWith(
+                  primary: const Color(0xff194BFB),
+                )),
+            home: CustomBottomNavigationBar(),
+            builder: (context, child) {
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: child!,
+              );
+            },
+          );
+        },
       ),
-      home: CustomBottomNavigationBar(),
     );
   }
 }
-
-
