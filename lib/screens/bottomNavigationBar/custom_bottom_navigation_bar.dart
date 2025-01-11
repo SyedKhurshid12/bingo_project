@@ -1,5 +1,7 @@
 import 'package:bingo_project/AppConstData/app_colors.dart';
+import 'package:bingo_project/screens/driving/driving_screen.dart';
 import 'package:bingo_project/screens/home_screen/home_screen.dart';
+import 'package:bingo_project/screens/login/login_screen.dart';
 import 'package:bingo_project/screens/theory_page/theory_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,20 +24,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   // List of screens for each tab
   final List<Widget> _screens = [
     HomeScreen(),
-    const Center(
-      child: Text(
-        'Driving Screen',
-        style: TextStyle(fontSize: 24, color: Colors.orange),
-      ),
-    ),
+    DrivingScreen(),
     const TheoryScreen(),
 
-    const Center(
-      child: Text(
-        'Settings Screen',
-        style: TextStyle(fontSize: 24, color: Colors.purple),
-      ),
-    ),
+    const LoginScreen()
   ];
 
   @override
