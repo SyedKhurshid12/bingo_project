@@ -4,6 +4,7 @@ import 'package:bingo_project/screens/home_screen/home_screen.dart';
 import 'package:bingo_project/screens/login/login_screen.dart';
 import 'package:bingo_project/screens/theory_page/theory_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 
@@ -15,6 +16,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _selectedIndex = 0;
+
 
   void _onItemTapped(int index) {
     setState(() {

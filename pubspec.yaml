@@ -49,6 +49,11 @@ dependencies:
   gap:
   firebase_auth:
   awesome_dialog:
+  fluttertoast: ^8.2.2
+  flutter_html:
+
+
+
 
 
 
@@ -82,6 +87,8 @@ flutter:
     - assets/images/
     - assets/svgs/
     - assets/animation/
+    - assets/icons/
+    - assets/logo/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,7 +1,9 @@
-import 'package:bingo_project/AppConstData/setlanguage.dart';
-import 'package:bingo_project/AppConstData/string_file.dart';
+import 'package:bingo_project/AppConstData/app_translation_file.dart';
+import 'package:bingo_project/configurations/setLanguage.dart';
 import 'package:bingo_project/screens/bottomNavigationBar/custom_bottom_navigation_bar.dart';
-import 'package:bingo_project/screens/login/login_screen.dart';
+import 'package:bingo_project/screens/home_screen/home_screen.dart';
+import 'package:bingo_project/screens/language_select/select_primary_language_screen.dart';
+import 'package:bingo_project/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +28,8 @@ void main() async {
 
   // Initialize ScreenUtil for sizing purposes
   await ScreenUtil.ensureScreenSize();
+  await Get.putAsync(() async => LocaleController());
+
 
   // Get shared preferences
   final localeLanuage = await SharedPreferences.getInstance();
@@ -34,12 +38,13 @@ void main() async {
     prefs: localeLanuage,
   ));
 }
+
 Future<void> preloadSVGs(List<String> paths) async {
   for (final path in paths) {
     final loader = SvgAssetLoader(path);
     await svg.cache.putIfAbsent(
       loader.cacheKey(null),
-          () => loader.loadBytes(null),
+      () => loader.loadBytes(null),
     );
   }
 }
@@ -55,43 +60,38 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => LocaleModel(_localeLanuage),
-      child: Consumer<LocaleModel>(
-        builder: (context, localeModel, child) {
-          return ScreenUtilInit(
-
-                  designSize: const Size(360, 690),
-              builder: (_, child) {
-                    return GetMaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'bkörkortsteori',
-                  getPages: getpage,
-                  locale: localeModel.locale,
-                  initialRoute: Routes.splashScreen,
-                  translations: AppTranslations(),
-                  theme: ThemeData(
-                      useMaterial3: false,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      dividerColor: Colors.transparent,
-                      fontFamily: "Roboto",
-                      primaryColor: const Color(0xff1347FF),
-                      colorScheme: ColorScheme.fromSwatch().copyWith(
-                        primary: const Color(0xff194BFB),
-                      )),
-                  home: CustomBottomNavigationBar(),
-                  builder: (context, child) {
-                    return MediaQuery(
-                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                      child: child!,
-                    );
-                  },
-                );
-              });
-            }
-
-
-      ),
+      child: Consumer<LocaleModel>(builder: (context, localeModel, child) {
+        return ScreenUtilInit(
+            designSize: const Size(360, 690),
+            builder: (_, child) {
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'bkörkortsteori',
+                getPages: getpage,
+                locale: localeModel.primaryLocale,
+                initialRoute: Routes.splashScreen,
+                translations: AppTranslations(),
+                theme: ThemeData(
+                    useMaterial3: false,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    dividerColor: Colors.transparent,
+                    fontFamily: "Roboto",
+                    primaryColor: const Color(0xff1347FF),
+                    colorScheme: ColorScheme.fromSwatch().copyWith(
+                      primary: const Color(0xff194BFB),
+                    )),
+                home:  SplashScreen(),
+                builder: (context, child) {
+                  return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                    child: child!,
+                  );
+                },
+              );
+            });
+      }),
     );
   }
 }

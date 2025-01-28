@@ -1,5 +1,6 @@
 import 'package:bingo_project/AppConstData/app_colors.dart';
 import 'package:bingo_project/AppConstData/helper_function.dart';
+import 'package:bingo_project/AppConstData/routes.dart';
 import 'package:bingo_project/controllers/steps_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class _StepByStepFlowState extends State<StepByStepFlow> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (_controller.stepModel.value.data?.isEmpty ?? false) {
+        if (_controller.stepModel.value.topics?.isEmpty ?? false) {
           return const Center(child: Text('No items available.'));
         }
 
@@ -41,23 +42,37 @@ class _StepByStepFlowState extends State<StepByStepFlow> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: _controller.stepModel.value.data?.length,
+                  itemCount: _controller.stepModel.value.topics?.length ?? 0,
                   itemBuilder: (context, index) {
                     bool isLeft =
                         index % 2 == 0; // Alternate between left and right
                     return Column(
                       children: [
-                        StepWidget(
-                          read: index ==0 ? true:false,
-                          stepNumber: _controller
-                              .stepModel.value.data?[index]?.topicId ??
-                              "",
-                          label: _controller
-                                  .stepModel.value.data?[index]?.topicName ??
-                              "",
-                          isLeft: isLeft,
-                          isLast: index == (_controller.stepModel.value.data?.length ?? 0) - 1,
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.getTopicDescriptionById,
+                              arguments: {
+                                'index': _controller.stepModel.value.topics?[index]?.id,
+                                'topicName': _controller.stepModel.value.topics?[index]?.questionTopic,
+                              },
+                            );
 
+                          },
+                          child: StepWidget(
+                            read: index == 0 ? true : false,
+                            stepNumber: _controller
+                                    .stepModel.value.topics?[index]?.id ??
+                                "",
+                            label: _controller.stepModel.value.topics?[index]
+                                    ?.questionTopic ??
+                                "",
+                            isLeft: isLeft,
+                            isLast: index ==
+                                (_controller.stepModel.value.topics?.length ??
+                                        0) -
+                                    1,
+                          ),
                         ),
                       ],
                     );
@@ -77,16 +92,16 @@ class StepWidget extends StatelessWidget {
   final String label;
   final bool isLeft;
   final bool isLast;
-  bool  read;
+  bool read;
 
-   StepWidget({
-    Key? key,
-    required this.stepNumber,
-    required this.label,
-    required this.isLeft,
-    required this.isLast,
-    required this.read
-  }) : super(key: key);
+  StepWidget(
+      {Key? key,
+      required this.stepNumber,
+      required this.label,
+      required this.isLeft,
+      required this.isLast,
+      required this.read})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +116,7 @@ class StepWidget extends StatelessWidget {
                     width: 150,
                     height: 150,
                     decoration: BoxDecoration(
-                      color: !read ? whiteColor:primary2,
+                      color: !read ? whiteColor : primary2,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: primary2),
                     ),
@@ -112,27 +127,31 @@ class StepWidget extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: !read?Colors.black:whiteColor)),
+                                border: Border.all(
+                                    color: !read ? Colors.black : whiteColor)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 stepNumber,
-                                style:  TextStyle(
-                                  color: !read?Colors.black:whiteColor,
+                                style: TextStyle(
+                                  color: !read ? Colors.black : whiteColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               label,
                               maxLines: 2,
                               textAlign: TextAlign.center,
-                              style:  TextStyle(
-                                color: !read?Colors.black:whiteColor,
+                              style: TextStyle(
+                                color: !read ? Colors.black : whiteColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -187,9 +206,12 @@ class StepWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               label,
                               maxLines: 2,

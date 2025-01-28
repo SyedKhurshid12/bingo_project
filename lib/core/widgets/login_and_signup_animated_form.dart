@@ -10,18 +10,15 @@ import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rive/rive.dart';
 
-
 import 'app_text_button.dart';
 import 'app_text_form_field.dart';
 import 'password_validations.dart';
 
-// ignore: must_be_immutable
 class EmailAndPassword extends StatefulWidget {
   final bool? isSignUpPage;
   final bool? isPasswordPage;
   late GoogleSignInAccount? googleUser;
   late OAuthCredential? credential;
-
 
   EmailAndPassword({
     super.key,
@@ -195,9 +192,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       textStyle: TextStyles.font16White600Weight,
       onPressed: () async {
         passwordFocuseNode.unfocus();
-        if (formKey.currentState!.validate()) {
-
-        }
+        if (formKey.currentState!.validate()) {}
       },
     );
   }
@@ -255,9 +250,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       onPressed: () async {
         passwordFocuseNode.unfocus();
         passwordConfirmationFocuseNode.unfocus();
-        if (formKey.currentState!.validate()) {
-
-        }
+        if (formKey.currentState!.validate()) {}
       },
     );
   }
@@ -354,9 +347,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       onPressed: () async {
         passwordFocuseNode.unfocus();
         passwordConfirmationFocuseNode.unfocus();
-        if (formKey.currentState!.validate()) {
-
-        }
+        if (formKey.currentState!.validate()) {}
       },
     );
   }

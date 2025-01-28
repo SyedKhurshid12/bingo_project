@@ -1,5 +1,10 @@
+import 'package:bingo_project/AppConstData/app_prefrences.dart';
 import 'package:bingo_project/AppConstData/helper_function.dart';
+import 'package:bingo_project/configurations/setLanguage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,12 +13,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: customAppBar(
         title: 'Bkrkortsteori',
-        titleColor:        Colors.green,
-
+        titleColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -21,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const SizedBox(height: 10),
               _buildHighlightedContainer(
                 imagePath: "assets/images/theory.png",
@@ -32,8 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildCard(
                 context,
                 title: "Mandatory Courses",
-                description: "Essential lessons for driving success.",
-                subDescription: "Viktiga lärdomar för att driva framgång.",
+                description: "Essential lessons for driving success".tr,
+                subDescription: getTextIntoSecondaryLanguage(
+                    "Essential lessons for driving success"),
                 child: _buildGrid(context),
               ),
               const SizedBox(height: 10),
@@ -76,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _buildHighlightedContainer({
     required String imagePath,
@@ -356,4 +365,47 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  String getTextIntoSecondaryLanguage(String text) {
+    // Ensure that LocaleController is initialized.
+    final localeController = Get.find<LocaleController>();
+
+    // Temporarily set the locale for translation
+    Locale secondaryLocale = Locale(localeController.secondaryLocale.languageCode,localeController.secondaryLocale.countryCode);
+
+    // Save the current locale
+    Locale? currentLocale = Get.locale;
+
+    // Set the locale to the secondary locale temporarily
+    Get.locale = secondaryLocale;
+
+    // Get the translation for the secondary locale
+    String translatedText = text.tr;
+
+    // Restore the original locale
+    Get.locale = currentLocale;
+
+    return translatedText;
+  }
+
+
+
+}
+
+class LocaleController extends GetxController {
+  late LocaleModel localeModel;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _initializeLocale();
+  }
+
+  _initializeLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    localeModel = LocaleModel(prefs);
+    update(); //
+  }
+
+  Locale get secondaryLocale =>
+      localeModel.secondaryLocale ?? Locale('es', 'ES');
 }
