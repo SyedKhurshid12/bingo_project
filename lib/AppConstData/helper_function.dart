@@ -6,12 +6,7 @@ TextStyle customTextStyle({
   Color color = Colors.black,
   // Default color
 }) {
-  return TextStyle(
-    fontSize: size,
-    fontWeight: weight,
-    color: color,
-    fontFamily: "Roboto"
-  );
+  return TextStyle(fontSize: size, fontWeight: weight, color: color, fontFamily: "Roboto");
 }
 
 Widget buildTitle(String title) {
@@ -41,8 +36,7 @@ PreferredSizeWidget customAppBar({
     elevation: 0.0,
     iconTheme: const IconThemeData(
       color: Colors.black, // Set the icon color to black
-    ),    automaticallyImplyLeading: showBackIcon ?? false, // Use showBackIcon or default to false
+    ),
+    automaticallyImplyLeading: showBackIcon ?? false, // Use showBackIcon or default to false
   );
 }
-
-

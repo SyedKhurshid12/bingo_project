@@ -1,10 +1,10 @@
 import 'package:bingo_project/screens/bottomNavigationBar/custom_bottom_navigation_bar.dart';
 import 'package:bingo_project/screens/driving/driving_screen.dart';
 import 'package:bingo_project/screens/forget/ui/forget_screen.dart';
-import 'package:bingo_project/screens/language_select/primary_langugage_controller.dart';
 import 'package:bingo_project/screens/language_select/select_primary_language_screen.dart';
 import 'package:bingo_project/screens/language_select/select_secondary_language.dart';
 import 'package:bingo_project/screens/login/login_screen.dart';
+import 'package:bingo_project/screens/questions_page/questions.dart';
 import 'package:bingo_project/screens/signup/ui/sign_up_sceen.dart';
 import 'package:bingo_project/screens/theory_page/step_by_step_flow_screen.dart';
 import 'package:bingo_project/screens/theory_page/topic_description.dart';
@@ -18,11 +18,10 @@ class Routes {
   static String bottomNavigationScreen = '/bottomNavigationScreen';
   static String stepByStopFlowScreen = '/stepByStopFlowScreen';
   static String drivingScreen = '/drivingScreen';
-  static String onPrimaryLanguageSelectScreen =
-      '/onPrimaryLanguageSelectScreen';
-  static String onSecondaryLanguageSelectScreen =
-      '/onSecondaryLanguageSelectScreen';
+  static String onPrimaryLanguageSelectScreen = '/onPrimaryLanguageSelectScreen';
+  static String onSecondaryLanguageSelectScreen = '/onSecondaryLanguageSelectScreen';
   static String getTopicDescriptionById = '/getTopicDescriptionById';
+  static String getTopicQuestionsById = '/getTopicQuestionsById';
 }
 
 final getpage = [
@@ -50,9 +49,7 @@ final getpage = [
     name: Routes.drivingScreen,
     page: () => const DrivingScreen(),
   ),
-  GetPage(
-      name: Routes.onPrimaryLanguageSelectScreen,
-      page: () => const LanguageSelect()),
+  GetPage(name: Routes.onPrimaryLanguageSelectScreen, page: () => const LanguageSelect()),
   GetPage(
       name: Routes.onSecondaryLanguageSelectScreen,
       page: () => SecondaryLanguageSelect(
@@ -65,4 +62,5 @@ final getpage = [
       topicName: (Get.arguments as Map)['topicName'],
     ),
   ),
+  GetPage(name: Routes.getTopicQuestionsById, page: () => QuestionsScreen(topicId: Get.arguments))
 ];

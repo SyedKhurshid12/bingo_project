@@ -64,8 +64,7 @@ class _TheoryScreenState extends State<TheoryScreen> {
         ],
       ),
       child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         leading: Image.asset(
           item.assetImage,
           height: 40,
